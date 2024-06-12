@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalCenterTitle">Chi tiết</h5>
+  <button
+    type="button"
+    class="close"
+    (click)="modal.dismiss('Cross click')"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Mã</th>
+          <th>Người nhận</th>
+          <th>Ngày tạo</th>
+          <th>Ngày trả</th>
+          <th>Số tiền (VNĐ)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.receiverName }}</td>
+          <td>{{ order.timeOrder | date : "dd-MM-yyyy" }}</td>
+          <td>{{ order.giveBackDay | date : "dd-MM-yyyy" }}</td>
+          <td>{{ order.total }}</td>
+        </tr>
+        <tr>
+          <td>Tổng</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="export()" rippleEffect>
+    Xuất báo cáo
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="modal.close('Accept click')"
+    rippleEffect
+  >
+    Thoát
+  </button>
+</div>

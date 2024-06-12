@@ -1,0 +1,8 @@
+@import "@core/scss/base/pages/app-ecommerce.scss";
+@import "@core/scss/angular/libs/form-wizard.component.scss";
+@import "@core/scss/base/plugins/forms/form-validation.scss";
+@import "@core/scss/angular/libs/flatpickr.component.scss";
+
+.error .ng2-flatpickr-input {
+  border-color: #ea5455 !important;
+}

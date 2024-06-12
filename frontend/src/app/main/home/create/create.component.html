@@ -1,0 +1,122 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalCenterTitle">Thêm sách mới</h5>
+  <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="basicInput">Tên sách</label>
+          <input type="text" class="form-control" formControlName="name" placeholder="Tên sách"
+            [ngClass]="submitted && f.name.errors ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="basicInput">Tác giả</label>
+          <input type="text" class="form-control" formControlName="author" placeholder="Tác giả"
+            [ngClass]="submitted && f.author.errors ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="basicInput">Giá thuê/ngày (VNĐ)</label>
+          <input type="number" class="form-control" formControlName="price" placeholder="Giá thuê"
+            [ngClass]="submitted && f.price.errors ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="basicInput">Đặt cọc (VNĐ)</label>
+          <input type="number" class="form-control" formControlName="deposit" placeholder="Đặt cọc"
+            [ngClass]="submitted && f.deposit.errors ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div *ngIf="!product" class="col-6">
+        <div class="form-group">
+          <label for="basicInput">Số lượng</label>
+          <input type="number" class="form-control" formControlName="quantity" placeholder="Số lượng"
+            [ngClass]="submitted && f.quantity.errors ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div *ngIf="!product" class="col-6">
+        <div class="form-group">
+          <label for="basicInput">Danh mục</label>
+          <ng-select [items]="categories" bindLabel="name" bindValue="id" placeholder="Danh mục"
+            formControlName="categoryId" [ngClass]="submitted && f.categoryId.errors ? 'is-invalid' : ''">
+            <ng-template ng-header-tmp>
+              <button class="btn btn-flat-primary cursor-pointer rounded-0 text-left p-50 w-100" (click)="
+                openModal(modal2)
+              ">
+                <i data-feather="plus"></i>
+                <span class="align-middle ml-25">Thêm Danh mục</span>
+              </button>
+            </ng-template>
+          </ng-select>
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="basicInput">Mô tả</label>
+          <textarea class="form-control" rows="3" formControlName="describe" placeholder="Mô tả"
+            [ngClass]="submitted && f.describe.errors ? 'is-invalid' : ''"></textarea>
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+      <div *ngIf="!product" class="col-12">
+        <div class="form-group">
+          <label for="basicInput">Ảnh</label>
+          <input type="file" accept="image/png, image/jpeg, image/jpg" (change)="changeImage($event)"
+            [ngClass]="submitted && f.file.errors ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="onSubmit()" rippleEffect>
+    Lưu
+  </button>
+  <button type="button" class="btn btn-outline-primary" (click)="modal.close('Accept click')" rippleEffect>
+    Thoát
+  </button>
+</div>
+
+<ng-template #modal2 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Thêm danh mục mới</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="basicInput">Tên danh mục</label>
+          <input type="text" class="form-control" [formControl]="categoryFormControl" placeholder="Tên danh mục"
+            [ngClass]="submitted2 && categoryFormControl.invalid ? 'is-invalid' : ''" />
+          <div class="invalid-feedback">Không được để trống</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onCategoryFormSubmit()" rippleEffect>
+      Lưu
+    </button>
+    <button type="button" class="btn btn-outline-primary" (click)="modal.close('Accept click')" rippleEffect>
+      Thoát
+    </button>
+  </div>
+</ng-template>

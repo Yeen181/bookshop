@@ -1,0 +1,139 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section>
+      <div class="card shadow-none border-0 mb-0 rounded-0 pb-1">
+        <div class="card-body pb-0 pl-1">
+          <form [formGroup]="form">
+            <div class="row">
+              <div class="col-12 col-lg-5">
+                <label>Tìm kiếm</label>
+                <input
+                  type="search"
+                  placeholder="Tìm kiếm"
+                  class="form-control"
+                  formControlName="searchText"
+                />
+              </div>
+
+              <div class="col-12 col-lg-7">
+                <label class="mb-0">&nbsp;</label>
+                <div class="d-flex justify-content-end">
+                  <button
+                    class="btn btn-outline-danger"
+                    rippleEffect
+                    (click)="delete()"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card shadow-none border-0 mb-0 rounded-0">
+        <ngx-datatable
+          [rows]="page.data"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="page.limit"
+          [count]="page.totalItems"
+          [offset]="page.currentPage"
+          [columnMode]="'force'"
+          [headerHeight]="40"
+          [externalPaging]="true"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [selectionType]="'checkbox'"
+          [rowIdentity]="getId"
+          (page)="pageChange($event)"
+          (select)="onSelect($event)"
+          [selected]="selected"
+        >
+          <ngx-datatable-column
+            [width]="50"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+          >
+            <ng-template
+              ngx-datatable-header-template
+              let-value="value"
+              let-allRowsSelected="allRowsSelected"
+              let-selectFn="selectFn"
+            >
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [checked]="allRowsSelected"
+                  (change)="selectFn(!allRowsSelected)"
+                  id="headerChkbxRef"
+                />
+                <label
+                  class="custom-control-label"
+                  for="headerChkbxRef"
+                ></label>
+              </div>
+            </ng-template>
+            <ng-template
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+              let-value="value"
+              let-isSelected="isSelected"
+              let-onCheckboxChangeFn="onCheckboxChangeFn"
+            >
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [checked]="isSelected"
+                  (change)="onCheckboxChangeFn($event)"
+                  id="rowChkbxRef{{ rowIndex }}"
+                />
+                <label
+                  class="custom-control-label"
+                  for="rowChkbxRef{{ rowIndex }}"
+                ></label>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="ID"
+            prop="id"
+            [width]="100"
+          ></ngx-datatable-column>
+          <ngx-datatable-column
+            name="Username"
+            prop="username"
+            [width]="250"
+          ></ngx-datatable-column>
+          <ngx-datatable-column
+            name="Vai trò"
+            prop="role"
+            [width]="250"
+          ></ngx-datatable-column>
+          <ngx-datatable-column
+            name="Họ và tên"
+            prop="fullName"
+            [width]="250"
+          ></ngx-datatable-column>
+          <ngx-datatable-column
+            name="Email"
+            prop="email"
+            [width]="250"
+          ></ngx-datatable-column>
+          <ngx-datatable-column
+            name="Số điện thoại"
+            prop="phoneNumber"
+            [width]="250"
+          ></ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </section>
+  </div>
+</div>

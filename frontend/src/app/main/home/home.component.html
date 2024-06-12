@@ -1,0 +1,157 @@
+<div class="content-wrapper container-xxl overflow-hidden p-0">
+  <!-- Sidebar filters  -->
+  <div class="sidebar-detached sidebar-left">
+    <div class="sidebar">
+      <core-sidebar
+        class="sidebar-shop"
+        id="ecommerce-sidebar-toggler"
+        name="ecommerce-sidebar"
+        collapsibleSidebar="bs-gt-lg"
+        overlayClass="body-content-overlay"
+      >
+        <app-filter [categories]="categories"></app-filter>
+      </core-sidebar>
+    </div>
+  </div>
+  <!--/ Sidebar filters -->
+
+  <div class="content-detached content-right">
+    <div class="content-body">
+      <!-- E-commerce Head Section Starts -->
+      <section id="ecommerce-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="ecommerce-header-items">
+              <div class="result-toggler">
+                <button
+                  class="navbar-toggler shop-sidebar-toggler"
+                  type="button"
+                  data-toggle="collapse"
+                  (click)="toggleSidebar('ecommerce-sidebar')"
+                >
+                  <span class="navbar-toggler-icon d-block d-lg-none"
+                    ><i data-feather="menu"></i
+                  ></span>
+                </button>
+                <div class="search-results">
+                  Tìm thấy {{ page.totalItems }} kết quả
+                </div>
+              </div>
+              <div *ngIf="isAdmin" class="view-options d-flex">
+                <button
+                  (click)="add()"
+                  type="button"
+                  class="btn btn-primary mr-1"
+                  rippleEffect
+                >
+                  <span class="active-sorting">Thêm mới</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  rippleEffect
+                  (click)="delete()"
+                >
+                  <span class="active-sorting">Xóa</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ecommerce-searchbar" class="ecommerce-searchbar">
+        <form [formGroup]="form">
+          <div class="row mt-1">
+            <div class="col-sm-12">
+              <div class="input-group input-group-merge">
+                <input
+                  type="text"
+                  class="form-control search-product"
+                  id="shop-search"
+                  placeholder="Tên sách"
+                  aria-label="Search..."
+                  aria-describedby="shop-search"
+                  formControlName="searchText"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text"
+                    ><i data-feather="search" class="text-muted"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+      <!-- E-commerce Head Section Starts -->
+
+      <!-- E-commerce Products Starts -->
+      <section id="ecommerce-products" class="grid-view">
+        <app-item
+          class="card ecommerce-card"
+          [product]="product"
+          *ngFor="let product of page.data"
+        ></app-item>
+      </section>
+      <!-- E-commerce Products Ends -->
+
+      <!-- E-commerce Pagination Starts -->
+      <section id="ecommerce-pagination">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="d-flex justify-content-center">
+              <ngb-pagination
+                *ngIf="page.totalPages > 1"
+                [collectionSize]="page.totalItems"
+                [pageSize]="f.limit.value"
+                [rotate]="true"
+                [ellipses]="false"
+                [boundaryLinks]="true"
+                (pageChange)="pageChange($event)"
+              >
+                <ng-template ngbPaginationPrevious
+                  ><span
+                    [data-feather]="'chevron-left'"
+                    [class]="'font-weight-bolder'"
+                    [size]="18"
+                  ></span>
+                </ng-template>
+                <ng-template ngbPaginationFirst
+                  ><span
+                    [data-feather]="'chevrons-left'"
+                    [class]="'font-weight-bolder'"
+                    [size]="18"
+                  ></span>
+                </ng-template>
+                <ng-template ngbPaginationNext
+                  ><span
+                    [data-feather]="'chevron-right'"
+                    [class]="'font-weight-bolder'"
+                    [size]="18"
+                  ></span
+                ></ng-template>
+                <ng-template ngbPaginationLast
+                  ><span
+                    [data-feather]="'chevrons-right'"
+                    [class]="'font-weight-bolder'"
+                    [size]="18"
+                  ></span>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- E-commerce Pagination Ends -->
+    </div>
+  </div>
+</div>
+
+<ng-template #modal let-modal>
+  <app-create
+    [modal]="modal"
+    (onSuccess)="getProducts()"
+    (onSuccess2)="getCategories()"
+  ></app-create>
+</ng-template>

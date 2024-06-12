@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalCenterTitle">Chi tiết</h5>
+  <button
+    type="button"
+    class="close"
+    (click)="modal.dismiss('Cross click')"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Tên sách</th>
+          <th>Số lượng</th>
+          <th>Giá thuê (VNĐ/ngày)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of order.listOrderDetail">
+          <td>
+            <img
+              [src]="'data:image/png;base64,' + product.image"
+              alt=""
+              style="width: 100px"
+            />
+          </td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="modal.close('Accept click')"
+    rippleEffect
+  >
+    Thoát
+  </button>
+</div>

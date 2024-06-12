@@ -1,0 +1,76 @@
+<!-- Ecommerce Sidebar Starts -->
+<div class="row mt-1 d-none d-lg-block">
+  <div class="col-sm-12">
+    <h6 class="filter-heading">Bộ lọc</h6>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div>
+        <h6 class="filter-title">Khoảng giá</h6>
+        <div class="form-group">
+          <label for="basicInput">Từ (VNĐ)</label>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="0"
+            formControlName="priceFrom"
+          />
+          <label for="basicInput">Đến (VNĐ)</label>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="0"
+            formControlName="priceTo"
+          />
+        </div>
+      </div>
+
+      <!-- Categories Starts -->
+      <div id="product-categories">
+        <h6 class="filter-title">Danh mục</h6>
+        <ul class="list-unstyled categories-list">
+          <li *ngFor="let category of categories; let i = index">
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                id="category{{ i }}"
+                name="categoryId"
+                class="custom-control-input"
+                formControlName="categoryId"
+                [value]="category.id"
+              />
+              <label class="custom-control-label" for="category{{ i }}">{{
+                category.name
+              }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- Categories Ends -->
+    </form>
+
+    <!-- Clear Filters Starts -->
+    <div id="clear-filters">
+      <button
+        type="button"
+        class="btn btn-block btn-primary"
+        rippleEffect
+        (click)="search()"
+      >
+        Tìm kiếm
+      </button>
+      <button
+        type="button"
+        class="btn btn-block btn-outline-primary"
+        rippleEffect
+        (click)="reset()"
+      >
+        Đặt lại
+      </button>
+    </div>
+    <!-- Clear Filters Ends -->
+  </div>
+</div>
+<!-- Ecommerce Sidebar Ends -->

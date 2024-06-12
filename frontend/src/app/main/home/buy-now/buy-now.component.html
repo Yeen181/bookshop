@@ -1,0 +1,313 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Thuê ngay</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-body">
+            <div class="bs-stepper checkout-tab-steps" id="checkoutStepper">
+                <!-- Wizard starts -->
+                <div class="bs-stepper-header">
+                    <div class="step" data-target="#step-cart">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">
+                                <i data-feather="shopping-cart" class="font-medium-3"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Giỏ hàng</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="line">
+                        <i data-feather="chevron-right" class="font-medium-2"></i>
+                    </div>
+                    <div class="step" data-target="#step-address">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">
+                                <i data-feather="home" class="font-medium-3"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Địa chỉ nhận hàng</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="line">
+                        <i data-feather="chevron-right" class="font-medium-2"></i>
+                    </div>
+                    <div class="step" data-target="#step-payment">
+                        <button [disabled]="form.invalid" type="button" class="step-trigger">
+                            <span class="bs-stepper-box">
+                                <i data-feather="credit-card" class="font-medium-3"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Thanh toán</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Wizard ends -->
+
+                <div class="bs-stepper-content">
+                    <!-- Checkout Place order starts -->
+                    <div id="step-cart" class="content">
+                        <div id="place-order" class="list-view product-checkout">
+                            <!-- Checkout Place Order Left starts -->
+                            <div class="checkout-items">
+                                <div class="card ecommerce-card">
+                                    <div class="item-img">
+                                        <a href="javascript:void(0)">
+                                            <img [src]="'data:image/png;base64,' + product.image"
+                                                alt="img-placeholder" />
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="item-name">
+                                            <h4 class="mb-1">
+                                                <a href="javascript:void(0)" class="text-body">Tên sách: {{ product.name
+                                                    }}</a>
+                                            </h4>
+                                        </div>
+
+                                        <div class="item-quantity mb-1">
+                                            <span class="quantity-title mr-1">Số lượng: </span>
+                                            <div class="quantity-counter-wrapper">
+                                                <button [disabled]="productOrder.quantity == 1"
+                                                    class="btn btn-sm btn-primary font-weight-bold font-medium-1"
+                                                    rippleEffect (click)="updateQuantity(-1)">
+                                                    -
+                                                </button>
+                                                {{ productOrder.quantity }}
+                                                <button [disabled]="productOrder.quantity >= product.quantity"
+                                                    class="btn btn-sm btn-primary font-weight-bold font-medium-1"
+                                                    rippleEffect (click)="updateQuantity(1)">
+                                                    +
+                                                </button>
+                                                (Hàng trong kho: {{ product.quantity }})
+                                            </div>
+                                        </div>
+
+                                        <div class="item-quantity mb-1">
+                                            <span class="quantity-title">Giá thuê: {{ product.price }} VNĐ/ngày</span>
+                                            <div class="quantity-counter-wrapper"></div>
+                                        </div>
+
+                                        <div class="item-quantity">
+                                            <span class="quantity-title">Đặt cọc: {{ product.deposit }} VNĐ/quyển</span>
+                                            <div class="quantity-counter-wrapper"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Checkout Place Order Left ends -->
+
+                            <!-- Checkout Place Order Right starts -->
+                            <div class="checkout-options">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="price-details">
+                                            <h6 class="price-title">
+                                                Kiểm tra kĩ số lượng mỗi mặt hàng trước khi đặt hàng
+                                            </h6>
+                                            <button type="button" class="btn btn-primary btn-block btn-next place-order"
+                                                (click)="nextStep()" rippleEffect>
+                                                Đặt hàng
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Checkout Place Order Right ends -->
+                            </div>
+                        </div>
+                        <!-- Checkout Place order Ends -->
+                    </div>
+                    <!-- Checkout Customer Address Starts -->
+                    <div id="step-address" class="content">
+                        <form id="checkout-address" class="list-view product-checkout" [formGroup]="form">
+                            <!-- Checkout Customer Address Left starts -->
+                            <div class="card">
+                                <div class="card-header flex-column align-items-start">
+                                    <h4 class="card-title">Thông tin nhận hàng</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group mb-2">
+                                                <label for="checkout-name">Họ tên người nhận</label>
+                                                <input type="text" id="checkout-name" class="form-control"
+                                                    [class.error]="submitted && f.receiverName.errors"
+                                                    placeholder="Họ tên người nhận" formControlName="receiverName" />
+                                                <span *ngIf="submitted && f.receiverName.errors" class="invalid-form">
+                                                    <small class="form-text text-danger">Không được bỏ trống</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group mb-2">
+                                                <label for="checkout-name">Số điện thoại người nhận</label>
+                                                <input type="text" id="checkout-name" class="form-control"
+                                                    [class.error]="submitted && f.receiverPhone.errors"
+                                                    placeholder="Số điện thoại người nhận"
+                                                    formControlName="receiverPhone" />
+                                                <span *ngIf="submitted && f.receiverPhone.errors" class="invalid-form">
+                                                    <small class="form-text text-danger">Không được bỏ trống</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group mb-2">
+                                                <label for="checkout-name">Địa chỉ nhận hàng</label>
+                                                <input type="text" id="checkout-name" class="form-control"
+                                                    [class.error]="submitted && f.receiverAddress.errors"
+                                                    placeholder="Địa chỉ nhận hàng" formControlName="receiverAddress" />
+                                                <span *ngIf="submitted && f.receiverAddress.errors"
+                                                    class="invalid-form">
+                                                    <small class="form-text text-danger">Không được bỏ trống</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group mb-2">
+                                                <label for="checkout-name">Ngày trả lại hàng</label>
+                                                <ng2-flatpickr [class.error]="submitted && f.giveBackDay.errors"
+                                                    [config]="flatpickrConfig"
+                                                    placeholder="Ngày trả lại hàng"></ng2-flatpickr>
+                                                <span *ngIf="submitted && f.giveBackDay.errors" class="invalid-form">
+                                                    <small class="form-text text-danger">Không được bỏ trống</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Ghi chú (nếu có)</label>
+                                                <fieldset class="form-group">
+                                                    <textarea class="form-control" rows="3"
+                                                        placeholder="Ghi chú (nếu có)"
+                                                        formControlName="note"></textarea>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary btn-next delivery-address mr-1"
+                                                (click)="validateNextStep()" rippleEffect>
+                                                Xác nhận
+                                            </button>
+                                            <button type="submit"
+                                                class="btn btn-outline-primary btn-next delivery-address"
+                                                (click)="previousStep()" rippleEffect>
+                                                Quay lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Checkout Customer Address Left ends -->
+                        </form>
+                    </div>
+                    <!-- Checkout Customer Address Ends -->
+
+                    <!-- Checkout Payment Starts -->
+                    <div id="step-payment" class="content mt-1">
+                        <form id="checkout-payment" class="row" onsubmit="return false;">
+                            <div class="payment-type col-4">
+                                <div class="card">
+                                    <div class="card-header flex-column align-items-start">
+                                        <h4 class="card-title">Phương thức thanh toán</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <hr class="my-2" />
+                                        <ul class="other-payment-options list-unstyled">
+                                            <li class="py-50">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="customColorRadio2" name="paymentOptions"
+                                                        class="custom-control-input" [(ngModel)]="payment"
+                                                        [value]="'Mã QR'" />
+                                                    <label class="custom-control-label" for="customColorRadio2">
+                                                        Mã QR
+                                                    </label>
+                                                </div>
+                                                <img *ngIf="payment == 'Mã QR'" src="assets/images/qr-code-nvd.jpg" alt="">
+                                            </li>
+                                            <li class="py-50">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="customColorRadio3" name="paymentOptions"
+                                                        class="custom-control-input" [(ngModel)]="payment"
+                                                        [value]="'Tiền mặt'" />
+                                                    <label class="custom-control-label" for="customColorRadio3">
+                                                        Tiền mặt
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <hr class="my-2" />
+                                        <div class="gift-card mb-25">
+                                            <button class="btn btn-primary" (click)="onSubmit()">
+                                                Tạo đơn hàng
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="amount-payable checkout-options col-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Đơn hàng</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row" id="basic-table">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tên sách</th>
+                                                                    <th>Tiền thuê (VNĐ)</th>
+                                                                    <th>Tiền đặt cọc (VNĐ)</th>
+                                                                    <th>Tổng (VNĐ)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{product.name}}</td>
+                                                                    <td>{{product.price}} x {{productOrder.quantity}}
+                                                                        quyển
+                                                                        x {{diffDays}} ngày =
+                                                                        {{getPrice()}}</td>
+                                                                    <td>{{product.deposit}} x {{productOrder.quantity}}
+                                                                        quyển = {{getDeposit()}}</td>
+                                                                    <td>{{getPrice() + getDeposit()}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <ul class="list-unstyled price-details">
+                                            <li class="price-detail">
+                                                <div class="details-title">Tổng tiền cần thanh toán</div>
+                                                <div class="detail-amt font-weight-bolder">{{getTotal()}} VNĐ</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- Checkout Payment Ends -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.close('Accept click')" rippleEffect>
+        Thoát
+    </button>
+</div>

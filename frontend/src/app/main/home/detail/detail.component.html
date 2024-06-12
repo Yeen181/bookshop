@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalCenterTitle">Chi tiết</h5>
+  <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+  <div class="row my-2">
+    <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+      <div class="d-flex align-items-center justify-content-center">
+        <img [src]="'data:image/png;base64,' + product.image" class="img-fluid product-img" alt="product image" />
+      </div>
+    </div>
+    <div class="col-12 col-md-7">
+      <h4>{{ product.name }}</h4>
+      <div class="card-text item-company">Thể loại
+        <a href="javascript:void(0)" class="company-name">{{
+          product.category.name
+          }}</a>
+      </div>
+      <div class="card-text item-company">Tác giả
+        <a href="javascript:void(0)" class="company-name">{{
+          product.author
+          }}</a>
+      </div>
+      <div class="ecommerce-details-price d-flex flex-wrap mt-1">
+        <h6 class="item-price mr-1">Giá thuê: {{ product.price }} VNĐ/ngày</h6>
+        <h6 class="item-price mr-1">Đặt cọc: {{ product.price }} VNĐ/quyển</h6>
+      </div>
+      <p class="card-text">
+        Tình trạng:
+        <span *ngIf="product.quantity > 0" class="text-success">Còn hàng ({{ product.quantity }})</span>
+        <span *ngIf="product.quantity <= 0" class="text-danger">Hết hàng</span>
+      </p>
+      <p class="card-text">
+        Mô tả: {{ product.describe }}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary" (click)="modal.close('Accept click')" rippleEffect>
+    Thoát
+  </button>
+</div>

@@ -1,0 +1,64 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header flex-column align-items-start">
+            <h4 class="card-title mb-75">Top danh mục được thuê cao nhất</h4>
+            <button (click)="export()" class="btn btn-primary">Xuất báo cáo</button>
+          </div>
+          <div class="card-body">
+            <div id="donut-chart" #topCategoryChartRef>
+              <apx-chart [series]="topCategoryChart.series" [chart]="{
+                  height: 350,
+                  width:
+                    isMenuToggled === false
+                      ? topCategoryChartRef.offsetWidth
+                      : topCategoryChart.chart.width,
+                  type: 'donut'
+                }" [labels]="topCategoryChart.labels" [plotOptions]="topCategoryChart.plotOptions"
+                [responsive]="topCategoryChart.responsive" [colors]="topCategoryChart.colors"
+                [legend]="topCategoryChart.legend"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header flex-column align-items-start">
+            <h4 class="card-title mb-75">Doanh thu theo tháng</h4>
+          </div>
+          <div class="card-body">
+            <div id="column-chart" *ngIf="revenuePriceChart?.series" #revenuePriceChartRef>
+              <apx-chart [series]="revenuePriceChart.series" [chart]="revenuePriceChart.chart"
+                [xaxis]="revenuePriceChart.xaxis" [stroke]="revenuePriceChart.stroke"
+                [tooltip]="revenuePriceChart.tooltip" [colors]="revenuePriceChart.colors"
+                [legend]="revenuePriceChart.legend" [dataLabels]="revenuePriceChart.dataLabels"
+                [plotOptions]="revenuePriceChart.plotOptions" [grid]="revenuePriceChart.grid"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header flex-column align-items-start">
+            <h4 class="card-title mb-75">Số sách cho thuê theo tháng</h4>
+          </div>
+          <div class="card-body">
+            <div id="column-chart" *ngIf="revenueTotalChart?.series" #revenueTotalChartRef>
+              <apx-chart [series]="revenueTotalChart.series" [chart]="revenueTotalChart.chart"
+                [xaxis]="revenueTotalChart.xaxis" [stroke]="revenueTotalChart.stroke"
+                [tooltip]="revenueTotalChart.tooltip" [colors]="revenueTotalChart.colors"
+                [legend]="revenueTotalChart.legend" [dataLabels]="revenueTotalChart.dataLabels"
+                [plotOptions]="revenueTotalChart.plotOptions" [grid]="revenueTotalChart.grid"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal let-modal>
+  <app-detail [month]="month" [modal]="modal"></app-detail>
+</ng-template>
